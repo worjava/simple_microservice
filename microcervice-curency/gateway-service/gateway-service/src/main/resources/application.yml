@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway-service
+  cloud:
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+        - id: currency-rate-service
+          uri: ${currency-service-url}
+          predicates:
+            - Path=/api/currency/**
+
+currency-service-url: http://localhost:8085
+
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: "http://localhost:8761/eureka"
